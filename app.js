@@ -81,9 +81,10 @@ function petProfile(points) {
   if (points >= 120) {
     return {
       stage: "legendary",
-      title: "星辉守护精灵",
+      title: "至尊体星月灵狐",
       level: "Lv.5",
-      description: "形态完全成熟，拥有礼冠、星杖和披风。",
+      image: "assets/pets/star-moon-fox/stage-5-supreme.png",
+      description: "星冠与光翼完全觉醒，守护班级的小小荣耀。",
       next: "已达到最高形态",
       progress: 100,
     };
@@ -92,10 +93,11 @@ function petProfile(points) {
   if (points >= 80) {
     return {
       stage: "hero",
-      title: "闪耀伙伴精灵",
+      title: "成年体星月灵狐",
       level: "Lv.4",
-      description: "长出勇气翅膀，装备星星披风。",
-      next: `距最终形态还差 ${120 - points} 分`,
+      image: "assets/pets/star-moon-fox/stage-4-adult.png",
+      description: "披上星光斗篷，已经能稳定守护好习惯。",
+      next: `距至尊体还差 ${120 - points} 分`,
       progress: Math.round(((points - 80) / 40) * 100),
     };
   }
@@ -103,10 +105,11 @@ function petProfile(points) {
   if (points >= 45) {
     return {
       stage: "grown",
-      title: "成长精灵",
+      title: "壮年体星月灵狐",
       level: "Lv.3",
-      description: "戴上小徽章，开始守护自己的好习惯。",
-      next: `距闪耀形态还差 ${80 - points} 分`,
+      image: "assets/pets/star-moon-fox/stage-3-strong.png",
+      description: "胸前星心宝石发光，勇气和自信都在长大。",
+      next: `距成年体还差 ${80 - points} 分`,
       progress: Math.round(((points - 45) / 35) * 100),
     };
   }
@@ -114,20 +117,22 @@ function petProfile(points) {
   if (points >= 20) {
     return {
       stage: "sprout",
-      title: "萌芽精灵",
+      title: "幼年体星月灵狐",
       level: "Lv.2",
-      description: "获得小围巾，正在慢慢长大。",
-      next: `距成长形态还差 ${45 - points} 分`,
+      image: "assets/pets/star-moon-fox/stage-2-child.png",
+      description: "戴上星星项圈，开始陪幼儿一起完成小目标。",
+      next: `距壮年体还差 ${45 - points} 分`,
       progress: Math.round(((points - 20) / 25) * 100),
     };
   }
 
   return {
     stage: "baby",
-    title: "蛋壳精灵",
+    title: "婴儿体星月灵狐",
     level: "Lv.1",
-    description: "刚刚被好习惯唤醒。",
-    next: `距萌芽形态还差 ${20 - points} 分`,
+    image: "assets/pets/star-moon-fox/stage-1-baby.png",
+    description: "抱着星心宝石，刚刚被好习惯唤醒。",
+    next: `距幼年体还差 ${20 - points} 分`,
     progress: Math.round((points / 20) * 100),
   };
 }
@@ -137,23 +142,7 @@ function petMarkup(points) {
   return `
     <div class="pet-panel stage-${pet.stage}">
       <div class="pet-scene" aria-hidden="true">
-        <div class="pet-aura"></div>
-        <div class="pet-wing left"></div>
-        <div class="pet-wing right"></div>
-        <div class="pet-body">
-          <div class="pet-crown"></div>
-          <div class="pet-ear left"></div>
-          <div class="pet-ear right"></div>
-          <div class="pet-face">
-            <span class="pet-cheek"></span>
-            <span class="pet-eye"></span>
-            <span class="pet-eye"></span>
-            <span class="pet-cheek"></span>
-          </div>
-          <div class="pet-badge"></div>
-          <div class="pet-scarf"></div>
-        </div>
-        <div class="pet-staff"></div>
+        <img class="pet-image" src="${pet.image}" alt="" loading="lazy" />
       </div>
       <div class="pet-info">
         <div class="pet-title-row">

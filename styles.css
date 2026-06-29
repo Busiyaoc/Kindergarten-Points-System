@@ -28,9 +28,12 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    linear-gradient(90deg, rgba(255, 231, 240, 0.64) 0 1px, transparent 1px 38px),
-    linear-gradient(0deg, rgba(234, 242, 255, 0.72) 0 1px, transparent 1px 38px),
-    linear-gradient(135deg, #fff7e8 0%, #f4fbff 54%, #fff0f6 100%);
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.88) 0 0.95rem, transparent 1rem),
+    radial-gradient(circle at 82% 16%, rgba(255, 255, 255, 0.74) 0 1.2rem, transparent 1.25rem),
+    radial-gradient(circle at 72% 76%, rgba(255, 255, 255, 0.78) 0 1.45rem, transparent 1.5rem),
+    linear-gradient(115deg, rgba(255, 122, 168, 0.22), transparent 28%),
+    linear-gradient(145deg, transparent 18%, rgba(255, 230, 138, 0.34) 32%, rgba(126, 220, 203, 0.24) 45%, rgba(159, 188, 255, 0.32) 58%, transparent 72%),
+    linear-gradient(180deg, #cbe8ff 0%, #f5edff 45%, #fff4df 100%);
   font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
 }
 
@@ -40,9 +43,12 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(45deg, transparent 48%, rgba(255, 207, 84, 0.26) 49% 51%, transparent 52%) 22px 18px / 92px 92px,
-    linear-gradient(-45deg, transparent 48%, rgba(94, 201, 167, 0.2) 49% 51%, transparent 52%) 0 0 / 116px 116px;
-  opacity: 0.9;
+    radial-gradient(circle at 10% 86%, rgba(255, 255, 255, 0.78) 0 2.1rem, transparent 2.15rem),
+    radial-gradient(circle at 16% 88%, rgba(255, 255, 255, 0.72) 0 2.7rem, transparent 2.75rem),
+    radial-gradient(circle at 24% 87%, rgba(255, 255, 255, 0.74) 0 2.2rem, transparent 2.25rem),
+    radial-gradient(circle at 86% 88%, rgba(255, 255, 255, 0.72) 0 2.8rem, transparent 2.85rem),
+    linear-gradient(45deg, transparent 48%, rgba(255, 226, 113, 0.35) 49% 51%, transparent 52%) 22px 18px / 92px 92px;
+  opacity: 0.95;
 }
 
 button,
@@ -65,6 +71,7 @@ button {
 
 .sidebar {
   background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.52)),
     linear-gradient(180deg, #fff1bd 0%, #ffe7f0 48%, #e5f8d8 100%);
   border-right: 1px solid rgba(125, 101, 216, 0.18);
   padding: 22px 18px;
@@ -242,7 +249,8 @@ select:focus {
   border: 2px solid rgba(125, 101, 216, 0.14);
   border-radius: 8px;
   background:
-    linear-gradient(90deg, #fffef8 0%, #f4fbff 55%, #fff1f6 100%);
+    radial-gradient(circle at 94% 18%, rgba(255, 230, 138, 0.42), transparent 22%),
+    linear-gradient(105deg, #fffef8 0%, #eff7ff 44%, #fff1f6 72%, #fff6d9 100%);
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
@@ -386,7 +394,7 @@ select:focus {
 
 .student-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 16px;
 }
 
@@ -453,16 +461,17 @@ select:focus {
 }
 
 .pet-panel {
-  min-height: 138px;
+  min-height: 210px;
   display: grid;
-  grid-template-columns: 118px minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 178px minmax(0, 1fr);
+  gap: 14px;
   align-items: center;
-  padding: 12px;
+  padding: 14px;
   border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0 54%, rgba(229, 248, 216, 0.9) 55% 100%),
-    linear-gradient(135deg, #f4fbff 0%, #fff1bd 100%);
+    radial-gradient(circle at 26% 18%, rgba(255, 255, 255, 0.82), transparent 25%),
+    radial-gradient(circle at 12% 82%, rgba(255, 231, 240, 0.74), transparent 28%),
+    linear-gradient(135deg, #edf7ff 0%, #fff3fc 42%, #fff2c5 100%);
   border: 2px solid #dbe5f2;
   overflow: hidden;
   position: relative;
@@ -480,21 +489,39 @@ select:focus {
 
 .pet-scene {
   position: relative;
-  width: 108px;
-  height: 108px;
+  width: 170px;
+  height: 170px;
   display: grid;
-  place-items: end center;
+  place-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0)),
+    linear-gradient(135deg, #dff2ff, #fff1fb 55%, #fff4ca);
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  box-shadow: 0 8px 18px rgba(120, 92, 70, 0.14);
 }
 
 .pet-scene::after {
   content: "";
   position: absolute;
-  left: 13px;
-  right: 13px;
-  bottom: 7px;
-  height: 15px;
+  left: 30px;
+  right: 30px;
+  bottom: 13px;
+  height: 16px;
   border-radius: 50%;
-  background: rgba(36, 48, 66, 0.12);
+  background: rgba(125, 101, 216, 0.16);
+  z-index: 1;
+}
+
+.pet-image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
 }
 
 .pet-aura {
