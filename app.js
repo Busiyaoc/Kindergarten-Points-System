@@ -145,8 +145,10 @@ function petMarkup(points) {
           <div class="pet-ear left"></div>
           <div class="pet-ear right"></div>
           <div class="pet-face">
+            <span class="pet-cheek"></span>
             <span class="pet-eye"></span>
             <span class="pet-eye"></span>
+            <span class="pet-cheek"></span>
           </div>
           <div class="pet-badge"></div>
           <div class="pet-scarf"></div>
