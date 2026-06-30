@@ -28,6 +28,65 @@ const defaultState = {
   ],
 };
 
+const petTypes = [
+  { id: "star-moon-fox", name: "星月灵狐" },
+  { id: "coral-spirit-horse", name: "珊瑚灵马" },
+  { id: "mountain-spirit-squirrel", name: "山灵松鼠" },
+];
+
+const petStages = [
+  {
+    stage: "baby",
+    stageNumber: 1,
+    title: "婴儿体",
+    level: "Lv.1",
+    description: "刚刚被好习惯唤醒，正在积攒第一份星光。",
+    nextLabel: "幼年体",
+    min: 0,
+    max: 20,
+  },
+  {
+    stage: "sprout",
+    stageNumber: 2,
+    title: "幼年体",
+    level: "Lv.2",
+    description: "开始陪幼儿完成小目标，身上的光芒更亮了。",
+    nextLabel: "壮年体",
+    min: 20,
+    max: 45,
+  },
+  {
+    stage: "grown",
+    stageNumber: 3,
+    title: "壮年体",
+    level: "Lv.3",
+    description: "自信和勇气一起长大，已经能守护好习惯。",
+    nextLabel: "成年体",
+    min: 45,
+    max: 80,
+  },
+  {
+    stage: "hero",
+    stageNumber: 4,
+    title: "成年体",
+    level: "Lv.4",
+    description: "装备更加华丽，稳定记录每一次进步。",
+    nextLabel: "至尊体",
+    min: 80,
+    max: 120,
+  },
+  {
+    stage: "legendary",
+    stageNumber: 5,
+    title: "至尊体",
+    level: "Lv.5",
+    description: "完成最终觉醒，成为班级荣耀的小小守护者。",
+    nextLabel: "",
+    min: 120,
+    max: 120,
+  },
+];
+
 let state = loadState();
 let toastTimer = null;
 
@@ -77,68 +136,30 @@ function getInitial(name) {
   return clean ? clean.slice(0, 1).toUpperCase() : "?";
 }
 
-function petProfile(points) {
-  if (points >= 120) {
-    return {
-      stage: "legendary",
-      title: "至尊体星月灵狐",
-      level: "Lv.5",
-      image: "assets/pets/star-moon-fox/stage-5-supreme.png",
-      description: "星冠与光翼完全觉醒，守护班级的小小荣耀。",
-      next: "已达到最高形态",
-      progress: 100,
-    };
-  }
+function petTypeById(id) {
+  return petTypes.find((item) => item.id === id) || petTypes[0];
+}
 
-  if (points >= 80) {
-    return {
-      stage: "hero",
-      title: "成年体星月灵狐",
-      level: "Lv.4",
-      image: "assets/pets/star-moon-fox/stage-4-adult.png",
-      description: "披上星光斗篷，已经能稳定守护好习惯。",
-      next: `距至尊体还差 ${120 - points} 分`,
-      progress: Math.round(((points - 80) / 40) * 100),
-    };
-  }
-
-  if (points >= 45) {
-    return {
-      stage: "grown",
-      title: "壮年体星月灵狐",
-      level: "Lv.3",
-      image: "assets/pets/star-moon-fox/stage-3-strong.png",
-      description: "胸前星心宝石发光，勇气和自信都在长大。",
-      next: `距成年体还差 ${80 - points} 分`,
-      progress: Math.round(((points - 45) / 35) * 100),
-    };
-  }
-
-  if (points >= 20) {
-    return {
-      stage: "sprout",
-      title: "幼年体星月灵狐",
-      level: "Lv.2",
-      image: "assets/pets/star-moon-fox/stage-2-child.png",
-      description: "戴上星星项圈，开始陪幼儿一起完成小目标。",
-      next: `距壮年体还差 ${45 - points} 分`,
-      progress: Math.round(((points - 20) / 25) * 100),
-    };
-  }
+function petProfile(points, petTypeId) {
+  const petType = petTypeById(petTypeId);
+  const stage = [...petStages].reverse().find((item) => points >= item.min) || petStages[0];
+  const progress =
+    stage.stageNumber === 5 ? 100 : Math.round(((points - stage.min) / (stage.max - stage.min)) * 100);
 
   return {
-    stage: "baby",
-    title: "婴儿体星月灵狐",
-    level: "Lv.1",
-    image: "assets/pets/star-moon-fox/stage-1-baby.png",
-    description: "抱着星心宝石，刚刚被好习惯唤醒。",
-    next: `距幼年体还差 ${20 - points} 分`,
-    progress: Math.round((points / 20) * 100),
+    stage: stage.stage,
+    title: `${stage.title}${petType.name}`,
+    level: stage.level,
+    image: `assets/pets/${petType.id}/stage-${stage.stageNumber}.webp`,
+    description: stage.description,
+    next: stage.stageNumber === 5 ? "已达到最高形态" : `距${stage.nextLabel}还差 ${stage.max - points} 分`,
+    progress,
+    typeName: petType.name,
   };
 }
 
-function petMarkup(points) {
-  const pet = petProfile(points);
+function petMarkup(student) {
+  const pet = petProfile(student.points, student.petType);
   return `
     <div class="pet-panel stage-${pet.stage}">
       <div class="pet-scene" aria-hidden="true">
@@ -155,6 +176,14 @@ function petMarkup(points) {
         </div>
         <small>${pet.next}</small>
       </div>
+      <label class="pet-choice">
+        <span>宠物精灵</span>
+        <select data-pet-change="${student.id}">
+          ${petTypes
+            .map((item) => `<option value="${item.id}" ${item.id === petTypeById(student.petType).id ? "selected" : ""}>${item.name}</option>`)
+            .join("")}
+        </select>
+      </label>
     </div>
   `;
 }
@@ -277,6 +306,12 @@ function renderStudents(selected) {
               <label for="studentAvatar">幼儿头像</label>
               <input id="studentAvatar" name="studentAvatar" type="file" accept="image/*" />
             </div>
+            <div class="field">
+              <label for="studentPet">宠物精灵</label>
+              <select id="studentPet" name="studentPet">
+                ${petTypes.map((item) => `<option value="${item.id}">${item.name}</option>`).join("")}
+              </select>
+            </div>
             <button class="text-button primary" type="submit">添加幼儿</button>
           </form>
         </div>
@@ -307,7 +342,7 @@ function studentCard(student, positives, negatives) {
         <div class="points">${student.points} 分</div>
       </div>
 
-      ${petMarkup(student.points)}
+      ${petMarkup(student)}
 
       <div class="action-columns">
         <div>
@@ -566,6 +601,7 @@ document.addEventListener("submit", async (event) => {
       id: createId(),
       name,
       avatar,
+      petType: data.get("studentPet") || petTypes[0].id,
       points: 0,
       history: [],
     });
@@ -711,6 +747,20 @@ document.addEventListener("click", (event) => {
     render();
     showToast("奖励已下架");
   }
+});
+
+document.addEventListener("change", (event) => {
+  const petSelector = event.target.closest("[data-pet-change]");
+  if (!petSelector) return;
+
+  const selected = currentClass();
+  const student = selected?.students.find((item) => item.id === petSelector.dataset.petChange);
+  if (!student) return;
+
+  student.petType = petSelector.value;
+  saveState();
+  render();
+  showToast(`${student.name} 的宠物已更换`);
 });
 
 render();
